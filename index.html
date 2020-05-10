@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Search</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script type="text/javascript" src="/static/d3.v4.js"></script>
+    <script type="text/javascript" src="/static/d3.layout.cloud.js"></script>
+</head>
+<body>
+
+    <div class="menu">
+        <a href="#" class= "active" id="button1" onclick="clickedButton1()">Google News</a>
+        <a href="#" class= "not-active" id="button2" onclick="clickedButton2()">Search</a>
+    </div>
+
+    <section id="homepage">
+        <div id="first">
+            <div class="slideshow">
+                <a href="" id="slideshow-anchor0">
+                    <div class="part-of-slideshow">
+                        <div class="textbox-slideshow">
+                            <div class="slideshow-title" id="title0"></div>
+                            <div class="slideshow-description" id="desc0"></div>
+                        </div>
+                        <img id="img0" src="">
+                    </div>
+                </a>
+
+                <a href="" id="slideshow-anchor1">
+                    <div class="part-of-slideshow">
+                        <div class="textbox-slideshow">
+                            <div class="slideshow-title" id="title1"></div>
+                            <div class="slideshow-description" id="desc1"></div>
+                        </div>
+                        <img id="img1" src="">
+                    </div>
+                </a>
+
+                <a href="" id="slideshow-anchor2">
+                    <div class="part-of-slideshow">
+                        <div class="textbox-slideshow">
+                            <div class="slideshow-title" id="title2"></div>
+                            <div class="slideshow-description" id="desc2"></div>
+                        </div>
+                        <img id="img2" src="">
+                    </div>
+                </a>
+
+                <a href="" id="slideshow-anchor3">
+                    <div class="part-of-slideshow">
+                        <div class="textbox-slideshow">
+                            <div class="slideshow-title" id="title3"></div>
+                            <div class="slideshow-description" id="desc3"></div>
+                        </div>
+                        <img id="img3" src="">
+                    </div>
+                </a>
+
+                <a href="" id="slideshow-anchor4">
+                    <div class="part-of-slideshow">
+                        <div class="textbox-slideshow">
+                            <div class="slideshow-title" id="title4"></div>
+                            <div class="slideshow-description" id="desc4"></div>
+                        </div>
+                        <img id="img4" src="">
+                    </div>
+                </a>
+            </div>
+            <div id="my_dataviz"></div>
+        </div>
+        <div class="news">
+            <div class="news-source"><h1>CNN</h1></div>
+            <div class="actual-news">
+                <div class="news-card" id="cnn-card0">
+                    <img id="cnn-img0" src="">
+                    <div class="news-title" id="cnn-title0"></div>
+                    <div class="news-desc" id="cnn-desc0"></div>
+                </div>
+                <div class="news-card" id="cnn-card1">
+                    <img id="cnn-img1" src="">
+                    <div class="news-title" id="cnn-title1"></div>
+                    <div class="news-desc" id="cnn-desc1"></div>
+                </div>
+
+                <div class="news-card" id="cnn-card2">
+                    <img id="cnn-img2" src="">
+                    <div class="news-title" id="cnn-title2"></div>
+                    <div class="news-desc" id="cnn-desc2"></div>
+                </div>
+
+                <div class="news-card" id="cnn-card3">
+                    <img id="cnn-img3" src="">
+                    <div class="news-title" id="cnn-title3"></div>
+                    <div class="news-desc" id="cnn-desc3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="news">
+            <div class="news-source"><h1>Fox News</h1></div>
+            <div class="actual-news">
+                <div class="news-card" id="fox-card0">
+                    <img id="fox-img0" src="">
+                    <div class="news-title" id="fox-title0"></div>
+                    <div class="news-desc" id="fox-desc0"></div>
+                </div>
+                <div class="news-card" id="fox-card1">
+                    <img id="fox-img1" src="">
+                    <div class="news-title" id="fox-title1"></div>
+                    <div class="news-desc" id="fox-desc1"></div>
+                </div>
+
+                <div class="news-card" id="fox-card2">
+                    <img id="fox-img2" src="">
+                    <div class="news-title" id="fox-title2"></div>
+                    <div class="news-desc" id="fox-desc2"></div>
+                </div>
+
+                <div class="news-card" id="fox-card3">
+                    <img id="fox-img3" src="">
+                    <div class="news-title" id="fox-title3"></div>
+                    <div class="news-desc" id="fox-desc3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="searchpage">
+        <form id="searchform" onload="setDate()">
+            <br><br>
+            <label for="keyword">Keyword <span class="required">*</span> </label>
+            <input type="text" id="keyword" name="keyword" size="15" value="" required>
+
+            <label for="startdate">From <span class="required">*</span> </label>
+            <input type="date" id="startdate" name="startdate"
+                value="" required>
+
+            <label for="enddate">To <span class="required">*</span> </label>
+            <input type="date" id="enddate" name="enddate"
+                value="" required>
+
+            <br><br><br>
+
+            <label for="category"> Category </label>
+            <select id="category" name="category" onchange="loadJSON('/allsources',change_sources);">
+                <option value="all">All</option>
+                <option value="business">Business</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="general">General</option>
+                <option value="health">Health</option>
+                <option value="science">Science</option>
+                <option value="sports">Sports</option>
+                <option value="technology">Technology</option>
+            </select>
+
+            <label for="sources"> Sources </label>
+            <select id="sources" name="sources"></select>
+            <br><br><br>
+
+            <input type="button" value="Search" id="searchbutton" onclick="loadJSON('/allsources',submitButtonClicked);">
+            <input type="button" value="Clear" id="clearbutton" onclick="clearForm()">
+
+            <br><br>
+        </form>
+        <div id="newsquery">
+            <!--
+            <div class="newsentry">
+                <img class= "newsimage" src="https://dynaimage.cdn.cnn.com/cnn/digital-images/org/044409cb-e6f2-4c5b-8eaf-26078a4edef2.jpg">
+                <div class="newsentry-text">
+                    <div class="newsentry-title">Commuting in the time of coronavirus in the nation's largest subway system</div>
+                    <div class="newsentry-desc">Crowded trains each weekday carry more than 5 million people hardened by terror threats and track-dwelling rats, daylight assaults and diluvial water main breaks. COVID-19 is their latest worry. The spread of the virus has unleashed anxiety across the nation'…</div>
+                </div>
+            </div>-->
+            <!--
+            <div class="newsentry-clicked">
+                <img class= "newsimage" src="https://dynaimage.cdn.cnn.com/cnn/digital-images/org/044409cb-e6f2-4c5b-8eaf-26078a4edef2.jpg">
+                <div class="newsentry-text">
+                    <div class="newsentry-title">Commuting in the time of coronavirus in the nation's largest subway system</div>
+                    <div class="newsentry-desc">Crowded trains each weekday carry more than 5 million people hardened by terror</div>
+                    <div>
+                        <div class="newsentry-author"><span style="font-weight: bold">Author: </span>Lebron James</div>
+                        <div class="newsentry-source"><span style="font-weight: bold">Source: </span>google.com</div>
+                        <div class="newsentry-date"><span style="font-weight: bold">Date: </span>2020/03/02</div>
+                        <div class="newsentry-desc-clicked">Crowded trains each weekday carry more than 5 million people hardened by terror threats and track-dwelling rats, daylight assaults and diluvial water main breaks. COVID-19 is their latest worry. The spread of the virus has unleashed anxiety across the nation'…</div>
+                        <a href="www.google.com">See Original Post</a>
+                    </div>
+                </div>
+                <div class="close-button">×</div>
+            </div>-->
+
+        </div>
+        <div id="showmore">Show More</div>
+    </section>
+
+
+    <script type="text/javascript" src="/static/script.js"></script>
+    <script>
+        //check the validity of the form
+        document.querySelector('#searchbutton').addEventListener('click', function() {
+            document.querySelector('#searchform').reportValidity();
+        });
+    </script>
+</body>
+</html>
